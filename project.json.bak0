@@ -1,0 +1,46 @@
+{
+    "project_name": "Frogger",
+    "version": "1.0.0",
+    "project_id": "{8399C2D3-042D-45B3-A419-921CC8494781}",
+    "origin": "The primary repo for Frogger goes here: i.e. http://www.mydomain.com",
+    "license": "What license Frogger uses goes here: i.e. https://opensource.org/licenses/Apache-2.0 Or https://opensource.org/licenses/MIT etc.",
+    "display_name": "Frogger",
+    "summary": "A short description of Frogger.",
+    "canonical_tags": [
+        "Project"
+    ],
+    "user_tags": [
+        "Frogger"
+    ],
+    "icon_path": "preview.png",
+    "engine": "o3de",
+    "external_subdirectories": [
+        "Gem"
+    ],
+    "restricted": "Frogger",
+    "gem_names": [
+        "Frogger",
+        "Atom",
+        "AudioSystem",
+        "AWSCore",
+        "CameraFramework",
+        "Compression",
+        "DebugDraw",
+        "DiffuseProbeGrid",
+        "EditorPythonBindings",
+        "EMotionFX",
+        "GameState",
+        "ImGui",
+        "LandscapeCanvas",
+        "LyShine",
+        "PhysX",
+        "PrimitiveAssets",
+        "PrefabBuilder",
+        "SaveData",
+        "ScriptCanvasPhysics",
+        "ScriptEvents",
+        "StartingPointInput",
+        "TextureAtlas",
+        "WhiteBox"
+    ]
+}

@@ -1,0 +1,11 @@
+*.prefab filter=lfs diff=lfs merge=lfs -text
+*.physxmaterial filter=lfs diff=lfs merge=lfs -text
+*.scriptcanvas filter=lfs diff=lfs merge=lfs -text
+*.material filter=lfs diff=lfs merge=lfs -text
+*.inputbindings filter=lfs diff=lfs merge=lfs -text
+*.scriptevents filter=lfs diff=lfs merge=lfs -text
+/Levels/ filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
+Assets/* filter=lfs diff=lfs merge=lfs -text
