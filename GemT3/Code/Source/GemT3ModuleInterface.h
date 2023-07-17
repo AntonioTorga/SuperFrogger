@@ -2,7 +2,7 @@
 #include <AzCore/Memory/SystemAllocator.h>
 #include <AzCore/Module/Module.h>
 #include <Clients/GemT3SystemComponent.h>
-#include <Clients/ShootingSpawnerComponent.h>
+#include <Clients/RandomPowerUpComponent.h>
 
 namespace GemT3
 {
@@ -21,7 +21,7 @@ namespace GemT3
             // This happens through the [MyComponent]::Reflect() function.
             m_descriptors.insert(m_descriptors.end(), {
                 GemT3SystemComponent::CreateDescriptor(),
-                ShootingSpawnerComponent::CreateDescriptor(),
+                RandomPowerUpComponent::CreateDescriptor(),
                 });
         }
 

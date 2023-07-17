@@ -2,29 +2,26 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
-#include <GemT3/ShootingSpawnerInterface.h>
-#include <AzFramework/Spawnable/SpawnableEntitiesInterface.h>
+#include <GemT3/RandomPowerUpInterface.h>
 
 namespace GemT3
 {
     /*
     * TODO: Register this component in your Gem's AZ::Module interface by inserting the following into the list of m_descriptors:
-    *       ShootingSpawnerComponent::CreateDescriptor(),
+    *       RandomPowerUpComponent::CreateDescriptor(),
     */
 
-    class ShootingSpawnerComponent
+    class RandomPowerUpComponent
         : public AZ::Component
-        , public ShootingSpawnerRequestBus::Handler
+        , public RandomPowerUpRequestBus::Handler
     {
     public:
-        AZ_COMPONENT(GemT3::ShootingSpawnerComponent, "{BA255B10-0FDE-4F32-9535-2C0192F1F9FE}");
+        AZ_COMPONENT(GemT3::RandomPowerUpComponent, "{102A6418-A623-45DA-A5BD-9B67CE926B90}");
 
         /*
         * Reflects component data into the reflection contexts, including the serialization, edit, and behavior contexts.
         */
         static void Reflect(AZ::ReflectContext* context);
-
-        void shoot() override;
 
         /*
         * Specifies the services that this component provides.
@@ -32,16 +29,6 @@ namespace GemT3
         * information to determine the order of component activation.
         */
         static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
-
-        /*
-        * Specifies the services that this component cannot operate with.
-        * For example, if two components provide a similar service and the system cannot use the
-        * services simultaneously, each of those components would specify the other component as
-        * an incompatible service.
-        * If an entity cannot have multiple instances of this component, include this component's
-        * provided service in the list of incompatible services.
-        */
-        static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
 
         /*
         * Specifies the services that this component requires.
@@ -52,14 +39,6 @@ namespace GemT3
         */
         static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
 
-        /*
-        * Specifies the services that this component depends on, but does not require.
-        * The system activates the dependent services before it activates this component.
-        * It also deactivates the dependent services after it deactivates this component.
-        * If a dependent service is missing before this component is activated, the system
-        * does not return an error and still activates this component.
-        */
-        static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
 
     protected:
         /*
@@ -84,11 +63,8 @@ namespace GemT3
         * Deactivate() implementation can handle this scenario.
         */
         void Deactivate() override;
+
     private:
-        float mVelocity;
-        AZ::Data::Asset<AzFramework::Spawnable> mSpawnableAsset;
-        AzFramework::EntitySpawnTicket mTicket;
+        float mForceThrow;
     };
-
-
 } // namespace GemT3

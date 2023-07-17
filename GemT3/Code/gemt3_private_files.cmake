@@ -4,7 +4,7 @@ set(FILES
     Source/Clients/GemT3SystemComponent.cpp
     Source/Clients/GemT3SystemComponent.h
 
-    Include/GemT3/ShootingSpawnerInterface.h
-    Source/Clients/ShootingSpawnerComponent.cpp
-    Source/Clients/ShootingSpawnerComponent.h
+    Include/GemT3/RandomPowerUpInterface.h
+    Source/Clients/RandomPowerUpComponent.cpp
+    Source/Clients/RandomPowerUpComponent.h
 )
