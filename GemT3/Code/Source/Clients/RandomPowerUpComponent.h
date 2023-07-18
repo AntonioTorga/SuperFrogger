@@ -3,6 +3,10 @@
 
 #include <AzCore/Component/Component.h>
 #include <GemT3/RandomPowerUpInterface.h>
+#include <AzFramework/Spawnable/SpawnableEntitiesInterface.h>
+#include <AZCore/Math/Vector3.h>
+//#include <AzCore/Component/TickBus.h>
+#include <string>
 
 namespace GemT3
 {
@@ -14,6 +18,7 @@ namespace GemT3
     class RandomPowerUpComponent
         : public AZ::Component
         , public RandomPowerUpRequestBus::Handler
+        //, public AZ::TickBus::Handler
     {
     public:
         AZ_COMPONENT(GemT3::RandomPowerUpComponent, "{102A6418-A623-45DA-A5BD-9B67CE926B90}");
@@ -39,6 +44,13 @@ namespace GemT3
         */
         static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
 
+        //void OnTick(float dt, AZ::ScriptTimePoint) override;
+        void GetRandomPowerUp() override;
+        void SetToNormal() override;
+        void Throw();
+        void GravityOff();
+        void Shrink();
+        void Invencibility();
 
     protected:
         /*
@@ -66,5 +78,12 @@ namespace GemT3
 
     private:
         float mForceThrow;
+        float mOriginalScale;
+        float mShrinkSize;
+        //float mCurrentTime = 0.f;
+        //float mTimeOfPowerUp;
+        int random_number;
+        AZStd::string mOriginalCollisionGroup;
+        AZStd::string mInvencibleCollisionGroup;
     };
 } // namespace GemT3

@@ -12,8 +12,8 @@
                                 "Floor",
                                 "SafetyNet",
                                 "End",
-                                {},
-                                {},
+                                "Invencible",
+                                "PowerUp",
                                 {},
                                 {},
                                 {},
@@ -95,6 +95,15 @@
                                     "Name": "FroggyFrog",
                                     "Group": {
                                         "Mask": 18446744073709551556
+                                    }
+                                },
+                                {
+                                    "Id": {
+                                        "GroupId": "{5642262D-1E06-4B5C-AC07-1B3F7FFF7420}"
+                                    },
+                                    "Name": "Invencible",
+                                    "Group": {
+                                        "Mask": 18446744073709551544
                                     }
                                 }
                             ]
