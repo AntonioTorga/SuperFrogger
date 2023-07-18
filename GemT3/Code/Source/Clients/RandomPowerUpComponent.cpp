@@ -18,11 +18,13 @@ namespace GemT3
         Physics::CollisionFilteringRequestBus::EventResult(mOriginalCollisionGroup, GetEntityId(), &Physics::CollisionFilteringRequestBus::Events::GetCollisionGroupName);
         AZ_Printf("RandomPowerUpComponent", "Iniciando con escala: %f Collision Group: %s", mOriginalScale, mOriginalCollisionGroup.c_str());
         AZ_Printf("RandomPowerUpComponent", "Invencible Collision Group: %s", mInvencibleCollisionGroup.c_str());
+        AZ::TickBus::Handler::BusConnect();
         RandomPowerUpRequestBus::Handler::BusConnect(GetEntityId());
     }
 
     void RandomPowerUpComponent::Deactivate()
     {
+        AZ::TickBus::Handler::BusDisconnect();
         RandomPowerUpRequestBus::Handler::BusDisconnect(GetEntityId());
     }
 
@@ -34,6 +36,7 @@ namespace GemT3
                 ->Field("Fuerza tiro", &RandomPowerUpComponent::mForceThrow)
                 ->Field("Tamaño al achicarse", &RandomPowerUpComponent::mShrinkSize)
                 ->Field("Nombre Group Invencible", &RandomPowerUpComponent::mInvencibleCollisionGroup)
+                ->Field("Tiempo de PowerUp", &RandomPowerUpComponent::mTimeOfPowerUp)
                 ->Version(1)
                 ;
 
@@ -47,6 +50,7 @@ namespace GemT3
                     ->DataElement(nullptr, &RandomPowerUpComponent::mForceThrow,"Fuerza tiro", "[Fuerza con la que se tira.]")
                     ->DataElement(nullptr, &RandomPowerUpComponent::mShrinkSize, "Tamano al achicarse", "[Escala a la que se transforma cuando el objeto se achica.]")
                     ->DataElement(nullptr, &RandomPowerUpComponent::mInvencibleCollisionGroup, "Nombre Group Invencible", "[Nombre de Group donde colisiona solo con el ambiente y no enemigos ni balas.]")
+                    ->DataElement(nullptr, &RandomPowerUpComponent::mTimeOfPowerUp, "Tiempo de PowerUp", "[Tiempo de duración del PowerUp antes de volver a la normalidad.]")
                     ;
             }
         }
@@ -73,9 +77,18 @@ namespace GemT3
         required.push_back(AZ_CRC_CE("PhysicsRigidBodyService"));
     }
 
+    void RandomPowerUpComponent::OnTick(float dt, AZ::ScriptTimePoint)
+    {
+        mCurrentTime += dt;
+        if (mTimer > 0 && mCurrentTime > mTimer) {
+            RandomPowerUpComponent::SetToNormal();
+        }
+    }
+
+
     void GemT3::RandomPowerUpComponent::GetRandomPowerUp()
     {
-        random_number = rand() % 100;
+        int random_number = rand() % 100;
         if (random_number < 25) 
         {
             AZ_Printf("RandomPowerUpComponent", "Throwing to");
@@ -94,16 +107,16 @@ namespace GemT3
             AZ_Printf("RandomPowerUpComponent", "Making invincible");
             GemT3::RandomPowerUpComponent::Invencibility();
         }
+        mTimer = mCurrentTime + mTimeOfPowerUp;
     }
 
     void GemT3::RandomPowerUpComponent::Throw() {
-        random_number = rand() % 100;
+        int random_number = rand() % 100;
 
         AZ::Vector3 ThrowDirection;
         if (random_number < 50) ThrowDirection = AZ::Vector3(0, -1, 0);
         else{ ThrowDirection = AZ::Vector3(0, 1, 0); }
-        ThrowDirection = ThrowDirection * mForceThrow;
-        Physics::RigidBodyRequestBus::Event(GetEntityId(), &Physics::RigidBodyRequestBus::Events::ApplyLinearImpulse , ThrowDirection);
+        Physics::RigidBodyRequestBus::Event(GetEntityId(), &Physics::RigidBodyRequestBus::Events::ApplyLinearImpulse , ThrowDirection * mForceThrow);
     }
 
     void GemT3::RandomPowerUpComponent::GravityOff()
@@ -127,6 +140,7 @@ namespace GemT3
         Physics::RigidBodyRequestBus::Event(GetEntityId(), &Physics::RigidBodyRequestBus::Events::SetGravityEnabled, true);
         AZ::TransformBus::Event(GetEntityId(), &AZ::TransformBus::Events::SetLocalUniformScale, mOriginalScale);
         Physics::CollisionFilteringRequestBus::Event(GetEntityId(), &Physics::CollisionFilteringRequestBus::Events::SetCollisionGroup, mOriginalCollisionGroup, AZ::Crc32());
+        mTimer = -1;
     }
 
 } // namespace GemT3
