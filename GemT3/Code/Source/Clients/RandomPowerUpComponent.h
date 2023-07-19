@@ -7,6 +7,7 @@
 #include <AZCore/Math/Vector3.h>
 #include <AzCore/Component/TickBus.h>
 #include <string>
+#include <map>
 
 namespace GemT3
 {
@@ -47,10 +48,14 @@ namespace GemT3
         void OnTick(float dt, AZ::ScriptTimePoint) override;
         void GetRandomPowerUp() override;
         void SetToNormal() override;
+        void SetBack(const std::string powerUp);
         void Throw();
         void GravityOff();
+        void GravityOn();
         void Shrink();
+        void Enlarge();
         void Invencibility();
+        void Vulnerability();
 
     protected:
         /*
@@ -77,14 +82,22 @@ namespace GemT3
         void Deactivate() override;
 
     private:
+        float mTimeOfGravityOff;
+        float mTimeOfInvencible;
+        float mTimeOfShrink;
+
         float mForceThrow;
-        float mOriginalScale;
         float mShrinkSize;
-        float mCurrentTime = 0.f;
-        float mTimer = -1;
-        float mTimeOfPowerUp;
-        AZStd::vector<float> mTimers;
-        AZStd::string mOriginalCollisionGroup;
         AZStd::string mInvencibleCollisionGroup;
+
+        std::vector<std::string> mPowerUps;
+        std::vector<float> mTimers;
+        std::vector<float> mSetTimers;
+
+        AZStd::string mOriginalCollisionGroup;
+        float mOriginalScale;
+
+        float mCurrentTime = 0.f;
+
     };
 } // namespace GemT3
